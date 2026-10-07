@@ -20,6 +20,7 @@ from coldstore.valve import OPEN, validate_valve
 
 from . import checks, history, ops
 from . import describe as describe_module
+from . import orchestration as orchestration_module
 from . import simulate as simulate_module
 from . import snapshot as snapshot_module
 from . import telemetry as telemetry_module
@@ -102,6 +103,30 @@ def ops_counters(server: "Server", request: Request) -> Response:
 
 def ops_reset_store(server: "Server", request: Request) -> Response:
     return json_response(ops.reset_store(server.runtime))
+
+
+def orchestration_list(server: "Server", request: Request) -> Response:
+    return orchestration_module.listing(server, request)
+
+
+def orchestration_run(server: "Server", request: Request) -> Response:
+    return orchestration_module.run(server, request)
+
+
+def orchestration_resume(server: "Server", request: Request) -> Response:
+    return orchestration_module.resume(server, request)
+
+
+def orchestration_lookup(server: "Server", request: Request) -> Response:
+    return orchestration_module.lookup(server, request)
+
+
+def orchestration_compensate(server: "Server", request: Request) -> Response:
+    return orchestration_module.compensate(server, request)
+
+
+def orchestration_approve(server: "Server", request: Request) -> Response:
+    return orchestration_module.approve(server, request)
 
 
 def telemetry(server: "Server", request: Request) -> Response:
