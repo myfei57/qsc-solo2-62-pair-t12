@@ -17,6 +17,9 @@ class OpsCounters:
     running: int
     supply_open: int
     audit_entries: int
+    cycles: int
+    cycles_failed: int
+    compensations_pending: int
 
     def as_dict(self) -> dict[str, object]:
         return {
@@ -26,10 +29,14 @@ class OpsCounters:
             "running": self.running,
             "supply_open": self.supply_open,
             "audit_entries": self.audit_entries,
+            "cycles": self.cycles,
+            "cycles_failed": self.cycles_failed,
+            "compensations_pending": self.compensations_pending,
         }
 
 
 def collect(rt: Runtime) -> OpsCounters:
+    cycles = rt.orchestrator.summary()
     return OpsCounters(
         store_keys=rt.store.count(),
         rooms=rt.rooms.count(),
@@ -37,6 +44,9 @@ def collect(rt: Runtime) -> OpsCounters:
         running=rt.compressors.running_count(),
         supply_open=len(rt.supply.opened_ids()),
         audit_entries=rt.auditor.count(),
+        cycles=cycles["cycles"],
+        cycles_failed=cycles["cycles_failed"],
+        compensations_pending=cycles["compensations_pending"],
     )
 
 

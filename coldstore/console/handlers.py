@@ -20,6 +20,7 @@ from coldstore.valve import OPEN, validate_valve
 
 from . import checks, history, ops
 from . import describe as describe_module
+from . import orchestrate as orchestrate_module
 from . import simulate as simulate_module
 from . import snapshot as snapshot_module
 from . import telemetry as telemetry_module
@@ -677,6 +678,42 @@ def export_telemetry(server: "Server", request: Request) -> Response:
 
 def cycle(server: "Server", request: Request) -> Response:
     return run_cycle(server.runtime, request)
+
+
+def cycle_run(server: "Server", request: Request) -> Response:
+    return orchestrate_module.run(server, request)
+
+
+def cycle_status(server: "Server", request: Request) -> Response:
+    return orchestrate_module.status(server, request)
+
+
+def cycle_list(server: "Server", request: Request) -> Response:
+    return orchestrate_module.listing(server, request)
+
+
+def cycle_resume(server: "Server", request: Request) -> Response:
+    return orchestrate_module.resume(server, request)
+
+
+def cycle_rollback(server: "Server", request: Request) -> Response:
+    return orchestrate_module.rollback(server, request)
+
+
+def cycle_restart(server: "Server", request: Request) -> Response:
+    return orchestrate_module.restart(server, request)
+
+
+def cycle_rerun(server: "Server", request: Request) -> Response:
+    return orchestrate_module.rerun(server, request)
+
+
+def cycle_compensations(server: "Server", request: Request) -> Response:
+    return orchestrate_module.compensations(server, request)
+
+
+def cycle_compensate(server: "Server", request: Request) -> Response:
+    return orchestrate_module.compensate(server, request)
 
 
 def simulate(server: "Server", request: Request) -> Response:
